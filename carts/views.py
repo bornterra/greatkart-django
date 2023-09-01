@@ -23,7 +23,7 @@ def add_cart(request, product_id):
             try:
                 variation = Variation.objects.get(variation_category__iexact=key, variation_value__iexact=value)
                 product_variation.append(variation)
-                print(variation)
+                # print(variation)
             except:
                 pass
     try:
@@ -46,7 +46,7 @@ def add_cart(request, product_id):
             existing_variation = item.variations.all()
             ex_var_list.append(list(existing_variation))
             id.append(item.id)
-        print(ex_var_list)
+        # print(ex_var_list)
 
         if product_variation in ex_var_list:
             # increase quant
