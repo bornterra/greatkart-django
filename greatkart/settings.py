@@ -149,3 +149,5 @@ EMAIL_HOST_USER='artisansden@gmail.com'
 EMAIL_HOST_PASSWORD='kqxfkrmqblcsvvvj'
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'Great Precious Marketplace <artisansden@gmail.com>'

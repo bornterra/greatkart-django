@@ -4,7 +4,7 @@ from carts.models import CartItem
 from .forms import OrderForm
 import datetime
 from .models import Order, Payment, OrderProduct
-import json
+import simplejson as json
 from store.models import Product
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
@@ -57,7 +57,7 @@ def payments(request):
 
     # Send order received email to customer
     mail_subject = 'Thank you for your order!'
-    message = render_to_string('order/order_received_email.html', {
+    message = render_to_string('orders/order_received_email.html', {
         'user': request.user,
         'order': order,
     })
@@ -73,8 +73,6 @@ def payments(request):
     }
     return JsonResponse(data)
 
-
-# Create your views here.
 def place_order(request, total=0, quantity=0):
     current_user = request.user
 
@@ -139,13 +137,13 @@ def order_complete(request):
     order_number = request.GET.get('order_number')
     transID = request.GET.get('payment_id')
 
-    subtotal = 0
-    for i in ordered_products:
-        subtotal += i.product_price * i.quantity
-
     try:
         order = Order.objects.get(order_number=order_number, is_ordered=True)
         ordered_products = OrderProduct.objects.filter(order_id=order.id)
+
+        subtotal = 0
+        for i in ordered_products:
+            subtotal += i.product_price * i.quantity
 
         payment = Payment.objects.get(payment_id=transID)
 
